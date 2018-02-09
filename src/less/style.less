@@ -1,11 +1,22 @@
+@font-face {
+    font-family: 'ci';
+    src: 
+        url("ci.woff") format('woff'),
+        url("ci.woff2") format('woff2'),
+        url("ci.ttf") format("ttf"),
+        url("ci.eot") format("eot");
+}
+
 .ci {
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    font-family: ci;
+    font-style: normal;
 
-    &.ci-new { background-image: url("../img/new.png"); }
-    &.ci-close { background-image: url("../img/close.png"); }
-    &.ci-delete { background-image: url("../img/delete.png"); }
-    &.ci-edit { background-image: url("../img/edit.png"); }
-    &.ci-urlmove { background-image: url("../img/urlmove.png"); }
-    &.ci-save { background-image: url("../img/save.png"); }
+    &.ci-new:before { content: "{new}"; }
+    &.ci-close { background-image: url("../src/img/close.png"); }
+    &.ci-delete { background-image: url("../src/img/delete.png"); }
+    &.ci-edit { background-image: url("../src/img/edit.png"); }
+    &.ci-urlmove { background-image: url("../src/img/urlmove.png"); }
+    &.ci-save { background-image: url("../src/img/save.png"); }
 }
