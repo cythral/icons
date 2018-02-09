@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'ci';
     src: 
-        url("ci.woff") format('woff'),
+        /*url("ci.woff") format('woff')*/
         url("ci.woff2") format('woff2'),
         url("ci.ttf") format("ttf"),
         url("ci.eot") format("eot");
@@ -14,9 +14,9 @@
     font-style: normal;
 
     &.ci-new:before { content: "{new}"; }
-    &.ci-close { background-image: url("../src/img/close.png"); }
-    &.ci-delete { background-image: url("../src/img/delete.png"); }
-    &.ci-edit { background-image: url("../src/img/edit.png"); }
-    &.ci-urlmove { background-image: url("../src/img/urlmove.png"); }
-    &.ci-save { background-image: url("../src/img/save.png"); }
+    &.ci-close:before { content: "{close}"; }
+    &.ci-delete:before { content: "{delete}"; }
+    &.ci-edit:before { content: "{edit}"; }
+    &.ci-urlmove:before { content: "{urlmove}"; }
+    &.ci-save:before { content: "{save}"; }
 }

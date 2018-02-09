@@ -54,11 +54,11 @@
 
         @font-face {
     font-family: "ci";
-    src: url("./ci.eot?1eb18f561f4b8dd66eb6ae6d2d5641d4?#iefix") format("embedded-opentype"),
-url("./ci.woff2?1eb18f561f4b8dd66eb6ae6d2d5641d4") format("woff2"),
-url("./ci.woff?1eb18f561f4b8dd66eb6ae6d2d5641d4") format("woff"),
-url("./ci.ttf?1eb18f561f4b8dd66eb6ae6d2d5641d4") format("truetype"),
-url("./ci.svg?1eb18f561f4b8dd66eb6ae6d2d5641d4#ci") format("svg");
+    src: url("./ci.eot?c6588388629c47e753cfb7539e84419c?#iefix") format("embedded-opentype"),
+url("./ci.woff2?c6588388629c47e753cfb7539e84419c") format("woff2"),
+url("./ci.woff?c6588388629c47e753cfb7539e84419c") format("woff"),
+url("./ci.ttf?c6588388629c47e753cfb7539e84419c") format("truetype"),
+url("./ci.svg?c6588388629c47e753cfb7539e84419c#ci") format("svg");
 }
 
 i {
@@ -72,8 +72,23 @@ i:before {
     vertical-align: top;
 }
 
-.icons-new:before {
+.icons-close:before {
     content: "\f101";
+}
+.icons-delete:before {
+    content: "\f102";
+}
+.icons-edit:before {
+    content: "\f103";
+}
+.icons-new:before {
+    content: "\f104";
+}
+.icons-save:before {
+    content: "\f105";
+}
+.icons-urlmove:before {
+    content: "\f106";
 }
 
 
@@ -86,10 +101,55 @@ i:before {
 
         <div class="preview">
             <span class="inner">
+                <i class="icons-close"></i>
+            </span>
+            <br>
+            <span class='label'>close</span>
+        </div>
+
+
+        <div class="preview">
+            <span class="inner">
+                <i class="icons-delete"></i>
+            </span>
+            <br>
+            <span class='label'>delete</span>
+        </div>
+
+
+        <div class="preview">
+            <span class="inner">
+                <i class="icons-edit"></i>
+            </span>
+            <br>
+            <span class='label'>edit</span>
+        </div>
+
+
+        <div class="preview">
+            <span class="inner">
                 <i class="icons-new"></i>
             </span>
             <br>
             <span class='label'>new</span>
+        </div>
+
+
+        <div class="preview">
+            <span class="inner">
+                <i class="icons-save"></i>
+            </span>
+            <br>
+            <span class='label'>save</span>
+        </div>
+
+
+        <div class="preview">
+            <span class="inner">
+                <i class="icons-urlmove"></i>
+            </span>
+            <br>
+            <span class='label'>urlmove</span>
         </div>
 
 
