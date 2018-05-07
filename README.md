@@ -19,6 +19,7 @@ If using the source files, the stylesheet you'll want to reference is dist/ci.cs
 - delete
 - close
 - save
+- code
 - urlmove
 
 ## Contributing

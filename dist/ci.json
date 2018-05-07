@@ -1,8 +1,9 @@
 {
     "close": "\\f101",
-    "delete": "\\f102",
-    "edit": "\\f103",
-    "new": "\\f104",
-    "save": "\\f105",
-    "urlmove": "\\f106"
+    "code": "\\f102",
+    "delete": "\\f103",
+    "edit": "\\f104",
+    "new": "\\f105",
+    "save": "\\f106",
+    "urlmove": "\\f107"
 }
