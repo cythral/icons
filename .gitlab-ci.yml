@@ -1,11 +1,9 @@
 image: node:9
 
-before_script: 
-  - npm install
-
 build:
   stage: build
   script:
+    - npm install
     - gulp
 
 pages:
