@@ -1,10 +1,17 @@
-image: alpine:latest
+image: node:9
+
+before_script: 
+  - npm install
+
+build:
+  stage: build
+  script:
+    - gulp
 
 pages:
   stage: deploy
   script:
-  - mkdir public
-  - mv dist/* public
+  - echo 'echo'
   artifacts:
     paths:
       - public
