@@ -1,9 +1,12 @@
+image: alpine:latest
+
 pages:
   stage: deploy
   script:
-  - echo 'echo'
+  - mkdir public
+  - mv dist/* public
   artifacts:
     paths:
-      - dist
+      - public
   only:
   - master
