@@ -5,7 +5,7 @@ Cythral Icons is a simple icon font using SVG images that was inspired by [Font 
 If using the source files, the stylesheet you'll want to reference is dist/ci.css.  Each release on GitHub (starting with v0.2.2) will have a zip containing the compiled stylesheet and font files.  The easier and recommended way is to use the hosted version:
 
 ```html
-<link rel="stylesheet" href="//icons.cythral.com/ci.css">
+<link rel="stylesheet" href="//icons.cythral.com/latest/ci.css">
 ```
 
 ## Usage
