@@ -1,0 +1,56 @@
+{{include:header}}
+
+<div id="hero">
+    <h1>A free SVG icon font that stands out</h1>
+    <div>
+        <i class="animate ci ci-edit"><span>.ci-edit</span></i>
+    </div>
+</div>
+
+<div class="howto">
+    <input readonly value="<link rel=&quot;stylesheet&quot; href=&quot;https://icons.cythral.com/latest/ci.css&quot;>">
+    <div>Add this to your &lt;head&gt; tag.</div>
+</div>
+
+<h2>Usage:</h2>
+<p><code>&lt;i class="ci {{ci-icon}}"&gt;&lt;/i&gt;</code><br>Replace {{ci-icon}} with one of the icon classes below:</p>
+<ul>
+
+</ul>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    var lastName = "edit", lastIndex = -1;
+    $(".howto input").click(function() { $(this).select(); });
+
+    $.getJSON("latest/ci.json", function(data) {
+        var keys = Object.keys(data);
+
+        for(let key in data) {
+            $("ul").append('<li><i class="ci ci-'+key+'"><span>.ci-'+key+'</span></i></li>');
+        }
+
+        setInterval(function() {
+            let a = document.querySelector(".animate");
+            
+            
+            a.classList.add("fade");
+            setTimeout(function() {
+                a.classList.remove("ci-"+lastName);
+            
+                if(!((lastIndex + 1) in keys)) {
+                    lastIndex = -1;
+                }
+
+                a.classList.add("ci-"+keys[++lastIndex]);
+                a.innerHTML = "<span>.ci-"+keys[lastIndex]+"</span>";
+                lastName = keys[lastIndex];
+                a.classList.remove("fade");
+            }, 1000);
+        }, 3000);
+    });
+    
+</script>
+
+{{include:footer}}
+

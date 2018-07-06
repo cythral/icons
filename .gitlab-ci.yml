@@ -13,7 +13,7 @@ build:
 pages:
   stage: deploy
   script:
-  - echo 'echo'
+  - npm run pages
   artifacts:
     paths:
       - public
