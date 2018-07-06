@@ -46,7 +46,7 @@ gulp.task('pages.html', () => {
 
         file = file.replace(/\{\{var:(.*?)\}\}/g, function(matches, n1) {
             return {
-                title: filename.replace(".html", ""),
+                title: filename !== "index.html" ? filename.replace(".html", "") + " - Cythral Icons" : "Cythral Icons",
                 year: new Date().getFullYear()
             }[n1] || "";
         });
