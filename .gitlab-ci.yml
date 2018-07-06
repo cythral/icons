@@ -5,6 +5,7 @@ build:
   script:
     - npm install
     - npm run build
+    - npm run pages
   artifacts:
     expire_in: 1 week
     paths:
@@ -13,7 +14,7 @@ build:
 pages:
   stage: deploy
   script:
-  - npm run pages
+  - echo 'hi'
   artifacts:
     paths:
       - public
