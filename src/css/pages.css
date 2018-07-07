@@ -19,6 +19,7 @@ header h1 {
 header h1 a img {
   height: 100%;
   width: auto;
+  max-width: 100%;
 }
 #hero {
   background: linear-gradient(to left, #006064 0%, #00c2ca 100%);
@@ -146,6 +147,12 @@ footer a:hover {
 }
 @media (max-width: 1000px) {
   #hero h1 {
-    font-size: 2em;
+    font-size: 1.8em;
+  }
+  #hero .animate {
+    font-size: 100px;
+  }
+  #hero .animate span {
+    font-size: 16px;
   }
 }
