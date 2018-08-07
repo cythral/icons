@@ -5,22 +5,65 @@ const
     path = require('path'),
     lessPluginCleanCSS = require('less-plugin-clean-css'),
     cleanCSSPlugin = new lessPluginCleanCSS({advanced: true}),
-    exec = require('child_process').execSync,
+    webfontSrc = require("webfonts-generator"),
+    axios = require("axios"),
+    exec = require("child_process").execSync,
+    Parser = require("dom-parser");
     
     lessSrcFile = "src/less/style.less",
     lessPagesFile = "src/less/pages.less";
+
+var webfont = async function(options) {
+    return new Promise((resolve, reject) => {
+        webfontSrc(options, (err, result) => {
+            resolve(result);
+        });
+    });
+};
     
 
-gulp.task('default', () => {
+gulp.task('default', async () => {
     exec("mkdir -p public/latest");
-    exec("icon-font-generator src/svg/*.svg -o public/latest -c false -n ci");
     
+    let codepoints = (await axios.get("https://icons.cythral.com/latest/ci.json")).data;
+    let files = fs.readdirSync("src/svg");
+    let lastCode = null;
+
+    for(let file in files) {
+        files[file] = "src/svg/"+files[file];
+    }
+
+    for(let point in codepoints) {
+        codepoints[point] = codepoints[point].replace("\\", "0x");
+        lastCode = codepoints[point];
+    }
+
+    lastCode++;
+
+    let result = await webfont({
+        files,
+        dest: "public/latest",
+        fontName: "ci",
+        types: ["svg", "ttf", "woff", "woff2", "eot"],
+        startCodepoint: lastCode,
+        codepoints
+    });
+
+    let parser = new Parser(), 
+    doc = parser.parseFromString(result.svg), 
+    codes = {};
+        
+    for(let glyph of doc.getElementsByTagName("glyph")) {
+        codes[glyph.getAttribute("glyph-name")] = glyph.getAttribute("unicode").replace("&#x", "\\").replace(";", "");
+    }
+
+    fs.writeFileSync("./public/latest/ci.json", JSON.stringify(codes));
+
     let lessSrcString = fs.readFileSync(lessSrcFile).toString();
     let extraLess = "";
-    let codes = JSON.parse(fs.readFileSync("public/latest/ci.json").toString());
     
     // add unicode characters to the css file
-    for(let code of Object.keys(codes)) {
+    for(let code in codes) {
         extraLess += `&.ci-${code}:before { content: "${codes[code]}"; }`;
     }
 
