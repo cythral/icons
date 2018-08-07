@@ -61,8 +61,6 @@ gulp.task('default', async () => {
 
     let lessSrcString = fs.readFileSync(lessSrcFile).toString();
     let extraLess = "";
-    
-    // add unicode characters to the css file
     for(let code in codes) {
         extraLess += `&.ci-${code}:before { content: "${codes[code]}"; }`;
     }
