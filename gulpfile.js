@@ -24,6 +24,7 @@ var webfont = async function(options) {
 
 gulp.task('default', async () => {
     exec("mkdir -p public/latest");
+    exec("cp -r src/svg public/img");
     
     let codepoints = (await axios.get("https://icons.cythral.com/latest/ci.json")).data;
     let files = fs.readdirSync("src/svg");
@@ -73,6 +74,7 @@ gulp.task('default', async () => {
 
     }).then(output => fs.writeFileSync("public/latest/ci.css", output.css));
 
+    
 });
 
 gulp.task('pages.html', () => {
