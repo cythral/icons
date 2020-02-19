@@ -1,6 +1,6 @@
 Description: CICD pipeline for Hello World
 Parameters:
-  GithubToken:
+  GithubToken: 
     Type: String
     NoEcho: true
     Description: OAuth token for the Github organization.  Needs read/write access to repos and repo hooks
