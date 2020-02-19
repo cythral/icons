@@ -1,7 +1,7 @@
-Description: CICD pipeline for Hello World
+Description: CICD pipeline for Cythral Icons
 Parameters:
   GithubToken: 
-    Type: String
+    Type: String 
     NoEcho: true
     Description: OAuth token for the Github organization.  Needs read/write access to repos and repo hooks
 
