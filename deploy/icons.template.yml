@@ -3,6 +3,10 @@ Parameters:
     Type: String
     Description: Domain name to serve icons from
 
+  HostedZoneId:
+    Type: String
+    Description: ID of the hosted zone to add DNS records to
+
 Resources:
   Bucket:
     Type: AWS::S3::Bucket
@@ -32,6 +36,42 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: Origin access identity for Cythral Icons
 
+  CertificateRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRole
+            Principal:
+              AWS: !Sub 
+                - arn:aws:iam::${AccountId}:role/cfn-resources-CertificateRole*
+                - AccountId: !ImportValue cfn-utilities:MasterAccountId
+  
+  CertificatePolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: acm:*
+            Resource: "*"
+      Roles:
+        - !Ref CertificateRole
+
+  Certificate:
+    Type: Custom::Certificate
+    Properties:
+      ServiceToken: !Sub 
+        - arn:aws:lambda:${AWS::Region}:${MasterAccountId}:function:Certificate
+        - MasterAccountId: !ImportValue cfn-utilities:MasterAccountId
+      DomainName: !Ref DomainName
+      ValidationType: DNS
+      HostedZoneId: !Ref HostedZoneId
+      CreationRoleArn: !GetAtt CertificateRole.Arn
+      
 Outputs:
   BucketName:
     Value: !Ref DomainName
