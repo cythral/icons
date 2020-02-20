@@ -35,6 +35,10 @@ gulp.task('default', async () => {
     }
 
     for(let point in codepoints) {
+        if(point.endsWith("-1")) {
+            continue;
+        }
+
         codepoints[point] = codepoints[point].replace("\\", "0x");
         lastCode = codepoints[point];
     }
@@ -55,8 +59,16 @@ gulp.task('default', async () => {
     codes = {};
         
     for(let glyph of doc.getElementsByTagName("glyph")) {
-        codes[glyph.getAttribute("glyph-name")] = glyph.getAttribute("unicode").replace("&#x", "\\").replace(";", "");
+        let name = glyph.getAttribute("glyph-name");
+        
+        if(name.endsWith("-1")) {
+            continue;
+        }
+
+        codes[name] = glyph.getAttribute("unicode").replace("&#x", "\\").replace(";", "");
     }
+
+    
 
     const codepointsJson = JSON.stringify(codes);
     fs.writeFileSync("./public/latest/ci.json", codepointsJson);
