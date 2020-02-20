@@ -43,7 +43,7 @@ Resources:
       DistributionConfig:
         Aliases:
           - !Ref DomainName
-        Comment: CloudFront distribution for the Maven Repository
+        Comment: CloudFront distribution for Cythral Icons
         Enabled: true
         PriceClass: PriceClass_100
         ViewerCertificate: 
