@@ -46,7 +46,7 @@ Resources:
             Action: sts:AssumeRole
             Principal:
               AWS: !Sub 
-                - arn:aws:iam::${AccountId}:role/cfn-resources-CertificateRole*
+                - arn:aws:iam::${AccountId}:role/cfn-resources-CertificateRole-H12NWXVKTFJA
                 - AccountId: !ImportValue cfn-utilities:MasterAccountId
   
   CertificatePolicy:
@@ -71,7 +71,7 @@ Resources:
       ValidationType: DNS
       HostedZoneId: !Ref HostedZoneId
       CreationRoleArn: !GetAtt CertificateRole.Arn
-      
+
 Outputs:
   BucketName:
     Value: !Ref DomainName
