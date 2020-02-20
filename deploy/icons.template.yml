@@ -56,6 +56,8 @@ Resources:
             - HEAD
             - OPTIONS
             - GET
+          ForwardedValues:
+            QueryString: true
         Origins:
           - Id: primary
             DomainName: !GetAtt Bucket.DomainName
