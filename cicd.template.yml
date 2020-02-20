@@ -146,10 +146,9 @@ Resources:
                 Owner: AWS
                 Version: 1
               InputArtifacts:
-                - Name: devOutputs
                 - Name: siteFiles
               Configuration:
-                BucketName: !GetParam [ devOutputs, icons.dev-outputs.json, BucketName ]
+                BucketName: icons.dev.cythral.com
                 Extract: true
         - Name: Prod
           Actions:
@@ -191,8 +190,7 @@ Resources:
                 Owner: AWS
                 Version: 1
               InputArtifacts:
-                - Name: prodOutputs
                 - Name: siteFiles
               Configuration:
-                BucketName: !GetParam [ prodOutputs, icons.prod-outputs.json, BucketName ]
+                BucketName: icons.cythral.com
                 Extract: true
