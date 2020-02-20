@@ -46,6 +46,7 @@ Resources:
         Comment: CloudFront distribution for Cythral Icons
         Enabled: true
         PriceClass: PriceClass_100
+        DefaultRootObject: index.html
         ViewerCertificate: 
           AcmCertificateArn: !Ref Certificate
           SslSupportMethod: sni-only
