@@ -120,6 +120,7 @@ Resources:
           Actions:
             - Name: CloudFormation
               RoleArn: !ImportValue cfn-metadata:DevAgentRoleArn
+              RunOrder: 1
               ActionTypeId:
                 Category: Deploy
                 Provider: CloudFormation
@@ -137,9 +138,9 @@ Resources:
                 RoleArn: !ImportValue cfn-metadata:DevAgentRoleArn
                 Capabilities: CAPABILITY_IAM
                 OutputFileName: icons.dev-outputs.json
-              RunOrder: 1
             - Name: S3
               RoleArn: !ImportValue cfn-metadata:DevAgentRoleArn
+              RunOrder: 2
               ActionTypeId:
                 Category: Deploy
                 Provider: S3
