@@ -6,12 +6,13 @@ const
     lessPluginCleanCSS = require('less-plugin-clean-css'),
     cleanCSSPlugin = new lessPluginCleanCSS({advanced: true}),
     webfontSrc = require("webfonts-generator"),
-    axios = require("axios"),
     exec = require("child_process").execSync,
     Parser = require("dom-parser");
     
     lessSrcFile = "src/less/style.less",
     lessPagesFile = "src/less/pages.less";
+
+let codepoints = require("./codepoints.json");
 
 var webfont = async function(options) {
     return new Promise((resolve, reject) => {
@@ -25,8 +26,7 @@ var webfont = async function(options) {
 gulp.task('default', async () => {
     exec("mkdir -p public/latest");
     exec("cp -r src/svg public/img");
-    
-    let codepoints = (await axios.get("https://icons.cythral.com/latest/ci.json")).data;
+
     let files = fs.readdirSync("src/svg");
     let lastCode = null;
 
@@ -58,7 +58,9 @@ gulp.task('default', async () => {
         codes[glyph.getAttribute("glyph-name")] = glyph.getAttribute("unicode").replace("&#x", "\\").replace(";", "");
     }
 
-    fs.writeFileSync("./public/latest/ci.json", JSON.stringify(codes));
+    const codepointsJson = JSON.stringify(codes);
+    fs.writeFileSync("./public/latest/ci.json", codepointsJson);
+    fs.writeFileSync("codepoints.json", codepointsJson);
 
     let lessSrcString = fs.readFileSync(lessSrcFile).toString();
     let extraLess = "";
@@ -109,4 +111,4 @@ gulp.task('pages.css', () => {
     }).then(output => fs.writeFileSync("public/css/pages.css", output.css));
 });
 
-gulp.task("pages", [ "pages.html", "pages.css" ]);
+gulp.task("pages", gulp.series("pages.html", "pages.css" ));
