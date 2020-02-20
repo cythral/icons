@@ -1,5 +1,5 @@
 Description: CICD pipeline for Cythral Icons
-Parameters:
+Parameters: 
   GithubToken: 
     Type: String 
     NoEcho: true
