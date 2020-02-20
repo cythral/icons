@@ -5,7 +5,7 @@ const
     path = require('path'),
     lessPluginCleanCSS = require('less-plugin-clean-css'),
     cleanCSSPlugin = new lessPluginCleanCSS({advanced: true}),
-    webfontSrc = require("webfonts-generator"),
+    webfontSrc = require("@vusion/webfonts-generator"),
     exec = require("child_process").execSync,
     Parser = require("dom-parser");
     
@@ -79,7 +79,7 @@ gulp.task('default', async () => {
     
 });
 
-gulp.task('pages.html', () => {
+function html(done) {
     exec("mkdir -p public/img");
     exec("cp -r src/img/* public/img");
     
@@ -98,17 +98,19 @@ gulp.task('pages.html', () => {
 
         fs.writeFileSync("public/"+filename, file);
     }
-});
 
-
-gulp.task('pages.css', () => {
+    done();
+}
+function css(done) {
     exec("mkdir -p public/css");
     let lessPagesString = fs.readFileSync(lessPagesFile).toString();
 
     less.render(lessPagesString, {
         filename: path.resolve(lessPagesFile),
         plugins: [cleanCSSPlugin]
-    }).then(output => fs.writeFileSync("public/css/pages.css", output.css));
-});
+    })
+    .then(output => fs.writeFileSync("public/css/pages.css", output.css))
+    .then(() => done());
+}
 
-gulp.task("pages", gulp.series("pages.html", "pages.css" ));
+gulp.task("pages", gulp.parallel(html, css));
