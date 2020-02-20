@@ -1,0 +1,40 @@
+Parameters:
+  DomainName:
+    Type: String
+    Description: Domain name to serve icons from
+
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref DomainName
+  
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Bucket
+      BucketPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              CanonicalUser: !GetAtt CloudfrontIdentity.S3CanonicalUserId
+            Action: 
+              - s3:ListBucket
+              - s3:GetObject
+            Resource: 
+              - !Sub arn:aws:s3:::${Bucket}
+              - !Sub arn:aws:s3:::${Bucket}/*
+
+  CloudfrontIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: Origin access identity for Cythral Icons
+
+Outputs:
+  BucketName:
+    Value: !Ref DomainName
+    Description: Name of the bucket that icons is deployed to in this environment
+    Export:
+      Name: !Sub ${AWS::StackName}:BucketName

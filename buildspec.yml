@@ -10,4 +10,16 @@ phases:
     commands:
       - npm run build
       - npm run pages
-    
+      - ./deploy/create-config-files.sh
+
+artifacts:
+  secondary-artifacts:
+    siteFiles:
+      base-directory: public
+      files:
+        - "**/*"
+    buildResults:
+      discard-paths: yes
+      files:
+        - "deploy/icons.template.yml"
+        - "*.config.json"

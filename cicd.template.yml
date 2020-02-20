@@ -113,11 +113,12 @@ Resources:
                 - Name: sourceCode
               OutputArtifacts:
                 - Name: buildResults
+                - Name: siteFiles
               Configuration:
                 ProjectName: !Ref BuildProject
         - Name: Dev
           Actions:
-            - Name: Deploy
+            - Name: CloudFormation
               RoleArn: !ImportValue cfn-metadata:DevAgentRoleArn
               ActionTypeId:
                 Category: Deploy
@@ -126,6 +127,8 @@ Resources:
                 Version: 1
               InputArtifacts:
                 - Name: buildResults
+              OutputArtifacts:
+                - Name: devOutputs
               Configuration:
                 StackName: icons
                 TemplatePath: buildResults::icons.template.yml
@@ -133,6 +136,21 @@ Resources:
                 ActionMode: CREATE_UPDATE
                 RoleArn: !ImportValue cfn-metadata:DevAgentRoleArn
                 Capabilities: CAPABILITY_IAM
+                OutputFileName: icons.dev-outputs.json
+              RunOrder: 1
+            - Name: S3
+              RoleArn: !ImportValue cfn-metadata:DevAgentRoleArn
+              ActionTypeId:
+                Category: Deploy
+                Provider: S3
+                Owner: AWS
+                Version: 1
+              InputArtifacts:
+                - Name: devOutputs
+                - Name: siteFiles
+              Configuration:
+                BucketName: !GetParam [ devOutputs, icons.dev-outputs.json, BucketName ]
+                Extract: true
         - Name: Prod
           Actions:
             - Name: Approve
@@ -144,7 +162,7 @@ Resources:
               InputArtifacts: []
               OutputArtifacts: []
               RunOrder: 1
-            - Name: Prod
+            - Name: CloudFormation
               RunOrder: 2
               RoleArn: !ImportValue cfn-metadata:ProdAgentRoleArn
               ActionTypeId:
@@ -154,6 +172,8 @@ Resources:
                 Version: 1
               InputArtifacts:
                 - Name: buildResults
+              OutputArtifacts:
+                - Name: prodOutputs
               Configuration:
                 StackName: icons
                 TemplatePath: buildResults::icons.template.yml
@@ -161,3 +181,18 @@ Resources:
                 ActionMode: CREATE_UPDATE
                 RoleArn: !ImportValue cfn-metadata:ProdAgentRoleArn
                 Capabilities: CAPABILITY_IAM
+                OutputFileName: icons.prod-outputs.json
+            - Name: S3
+              RoleArn: !ImportValue cfn-metadata:ProdAgentRoleArn
+              RunOrder: 3
+              ActionTypeId:
+                Category: Deploy
+                Provider: S3
+                Owner: AWS
+                Version: 1
+              InputArtifacts:
+                - Name: prodOutputs
+                - Name: siteFiles
+              Configuration:
+                BucketName: !GetParam [ prodOutputs, icons.prod-outputs.json, BucketName ]
+                Extract: true
