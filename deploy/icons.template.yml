@@ -36,6 +36,32 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: Origin access identity for Cythral Icons
 
+  CloudfrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      Tags: []
+      DistributionConfig:
+        Aliases:
+          - !Ref DomainName
+        Comment: CloudFront distribution for the Maven Repository
+        Enabled: true
+        PriceClass: PriceClass_100
+        ViewerCertificate: 
+          AcmCertificateArn: !Ref Certificate
+          SslSupportMethod: sni-only
+        DefaultCacheBehavior:
+          TargetOriginId: primary
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - HEAD
+            - OPTIONS
+            - GET
+        Origins:
+          - Id: primary
+            DomainName: !GetAtt Bucket.DomainName
+            S3OriginConfig: 
+              OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudfrontIdentity}
+
   CertificateRole:
     Type: AWS::IAM::Role
     Properties:
@@ -63,6 +89,8 @@ Resources:
 
   Certificate:
     Type: Custom::Certificate
+    DependsOn:
+      - CertificatePolicy
     Properties:
       ServiceToken: !Sub 
         - arn:aws:lambda:${AWS::Region}:${MasterAccountId}:function:Certificate
