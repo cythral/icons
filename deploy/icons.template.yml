@@ -17,7 +17,6 @@ Resources:
           - AllowedMethods:
               - GET
               - HEAD
-              - OPTIONS
             AllowedOrigins:
               - "*"
   
