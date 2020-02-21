@@ -12,6 +12,14 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref DomainName
+      CorsConfiguration:
+        CorsRules:
+          - AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            AllowedOrigins:
+              - "*"
   
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
