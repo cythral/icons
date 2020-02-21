@@ -211,7 +211,6 @@ Resources:
                 StackName: icons-dns
                 TemplatePath: buildResults::dns.template.yml
                 ActionMode: CREATE_UPDATE
-                RoleArn: !ImportValue cfn-metadata:ProdAgentRoleArn
                 ParameterOverrides: |
                   {
                     "HostedZone": "cythral.com.",
