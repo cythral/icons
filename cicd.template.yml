@@ -214,7 +214,7 @@ Resources:
                 RoleArn: !ImportValue cfn-metadata:ProdAgentRoleArn
                 ParameterOverrides: |
                   {
-                    "HostedZone": "cythral.com."
+                    "HostedZone": "cythral.com.",
                     "DevDomainName": { "Fn::GetParam": [ "devOutputs", "icons.dev-outputs.json", "DomainName" ] },
                     "DevAliasTarget": { "Fn::GetParam": [ "devOutputs", "icons.dev-outputs.json", "CloudfrontDomainName" ] },
                     "ProdDomainName": { "Fn::GetParam": [ "prodOutputs", "icons.prod-outputs.json", "DomainName" ] },
