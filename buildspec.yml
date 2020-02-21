@@ -22,4 +22,5 @@ artifacts:
       discard-paths: yes
       files:
         - "deploy/icons.template.yml"
+        - "deploy/dns.template.yml"
         - "*.config.json"

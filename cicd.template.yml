@@ -195,3 +195,28 @@ Resources:
               Configuration:
                 BucketName: icons.cythral.com
                 Extract: true
+        - Name: DNS
+          Actions:
+            - Name: DNS
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              InputArtifacts:
+                - Name: buildResults
+                - Name: devOutputs
+                - Name: prodOutputs
+              Configuration:
+                StackName: icons-dns
+                TemplatePath: buildResults::dns.template.yml
+                ActionMode: CREATE_UPDATE
+                RoleArn: !ImportValue cfn-metadata:ProdAgentRoleArn
+                ParameterOverrides: |
+                  {
+                    "HostedZone": "cythral.com."
+                    "DevDomainName": { "Fn::GetParam": [ "devOutputs", "icons.dev-outputs.json", "DomainName" ] },
+                    "DevAliasTarget": { "Fn::GetParam": [ "devOutputs", "icons.dev-outputs.json", "CloudfrontDomainName" ] },
+                    "ProdDomainName": { "Fn::GetParam": [ "prodOutputs", "icons.prod-outputs.json", "DomainName" ] },
+                    "ProdAliasTarget": { "Fn::GetParam": [ "prodOutputs", "icons.prod-outputs.json", "CloudfrontDomainName" ] }
+                  }

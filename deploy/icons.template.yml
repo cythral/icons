@@ -104,8 +104,14 @@ Resources:
       CreationRoleArn: !GetAtt CertificateRole.Arn
 
 Outputs:
-  BucketName:
+  DomainName:
     Value: !Ref DomainName
-    Description: Name of the bucket that icons is deployed to in this environment
+    Description: Domain name to put this deployment of icons under
     Export:
-      Name: !Sub ${AWS::StackName}:BucketName
+      Name: !Sub ${AWS::StackName}:DomainName
+
+  CloudfrontDomainName:
+    Value: !GetAtt CloudfrontDistribution.DomainName
+    Description: Domain name of the cloudfront distribution to CNAME
+    Export:
+      Name: !Sub ${AWS::StackName}:CloudfrontDomainName
