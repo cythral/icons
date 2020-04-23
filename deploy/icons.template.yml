@@ -55,7 +55,7 @@ Resources:
         PriceClass: PriceClass_100
         DefaultRootObject: index.html
         ViewerCertificate: 
-          AcmCertificateArn: !Ref Certificate
+          AcmCertificateArn: !Ref SSLCertificate
           SslSupportMethod: sni-only
         DefaultCacheBehavior:
           TargetOriginId: primary
@@ -72,43 +72,14 @@ Resources:
             S3OriginConfig: 
               OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudfrontIdentity}
 
-  CertificateRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Action: sts:AssumeRole
-            Principal:
-              AWS: !Sub 
-                - arn:aws:iam::${AccountId}:role/cfn-resources-CertificateRole-H12NWXVKTFJA
-                - AccountId: !ImportValue cfn-utilities:MasterAccountId
-  
-  CertificatePolicy:
-    Type: AWS::IAM::ManagedPolicy
-    Properties:
-      PolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Action: acm:*
-            Resource: "*"
-      Roles:
-        - !Ref CertificateRole
-
-  Certificate:
+  SSLCertificate:
     Type: Custom::Certificate
-    DependsOn:
-      - CertificatePolicy
     Properties:
-      ServiceToken: !Sub 
-        - arn:aws:lambda:${AWS::Region}:${MasterAccountId}:function:Certificate
-        - MasterAccountId: !ImportValue cfn-utilities:MasterAccountId
+      ServiceToken: !ImportValue cfn-certificate-resource:CertificateLambdaArn
       DomainName: !Ref DomainName
       ValidationType: DNS
       HostedZoneId: !Ref HostedZoneId
-      CreationRoleArn: !GetAtt CertificateRole.Arn
+      CreationRoleArn: !ImportValue cfn-certificate-resource:CreatorRoleArn
 
 Outputs:
   DomainName:
