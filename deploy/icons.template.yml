@@ -1,3 +1,4 @@
+Description: Custom icon font built for Cythral Software and Websites
 Parameters:
   DomainName:
     Type: String
@@ -8,6 +9,9 @@ Parameters:
     Description: ID of the hosted zone to add DNS records to
 
 Resources:
+  DummyBucket:
+    Type: AWS::S3::Bucket
+
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
