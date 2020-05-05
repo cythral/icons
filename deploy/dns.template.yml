@@ -21,9 +21,6 @@ Parameters:
     Description: The alias target (cname value) to use for the production version of icons.
   
 Resources:
-  DummyBucket:
-    Type: AWS::S3::Bucket
-
   DevRecords:
     Type: AWS::Route53::RecordSetGroup
     Properties:
