@@ -59,11 +59,20 @@ Resources:
         Modes:
           - LOCAL_DOCKER_LAYER_CACHE
       Artifacts:
-        Type: S3
-        Location: !Ref ArtifactStore
-        Name: buildResults.zip
-        NamespaceType: BUILD_ID
-        Packaging: ZIP
+        Type: NO_ARTIFACTS
+      SecondaryArtifacts:
+        - ArtifactIdentifier: buildResults
+          Type: S3
+          Location: !Ref ArtifactStore
+          Name: buildResults.zip
+          NamespaceType: BUILD_ID
+          Packaging: ZIP
+        - ArtifactIdentifier: siteFiles
+          Type: S3
+          Location: !Ref ArtifactStore
+          Name: siteFiles.zip
+          NamespaceType: BUILD_ID
+          Packaging: ZIP
       Source:
         Type: GITHUB
         Location: !Sub https://github.com/${GithubOwner}/${GithubRepo}.git
