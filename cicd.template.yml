@@ -74,7 +74,7 @@ Resources:
     Properties:
       ContentBasedDeduplication: true
       FifoQueue: true
-      MessageRetentionPeriod: 1209600
+      MessageRetentionPeriod: 1209600 
 
   SupersessionEventSourceMapping:
     Type: AWS::Lambda::EventSourceMapping
