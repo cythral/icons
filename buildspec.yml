@@ -13,8 +13,6 @@ phases:
       - ./deploy/create-config-files.sh
 
 artifacts:
-  files:
-    - codepoints.json
   secondary-artifacts:
     siteFiles:
       base-directory: public
