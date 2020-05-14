@@ -179,7 +179,7 @@ Resources:
                   "MessageGroupId": "${GithubRepo}",
                   "MessageBody": {
                     "StackName": "${GithubRepo}",
-                    "ZipLocation.$": "$.BuildOutput.Build.Artifacts.Location",
+                    "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[0].Location",
                     "TemplateFileName": "${GithubRepo}.template.yml",
                     "TemplateConfigurationFileName": "${GithubRepo}.dev.config.json",
                     "RoleArn": "${DevRoleArn}",
@@ -240,7 +240,7 @@ Resources:
                   "MessageGroupId": "${GithubRepo}",
                   "MessageBody": {
                     "StackName": "${GithubRepo}",
-                    "ZipLocation.$": "$.BuildOutput.Build.Artifacts.Location",
+                    "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[0].Location",
                     "TemplateFileName": "${GithubRepo}.template.yml",
                     "TemplateConfigurationFileName": "${GithubRepo}.prod.config.json",
                     "RoleArn": "${ProdRoleArn}",
@@ -270,10 +270,9 @@ Resources:
                   "QueueUrl": "${DeploymentQueue}",
                   "MessageGroupId": "${GithubRepo}",
                   "MessageBody": {
-                    "StackName": "${GithubRepo}",
-                    "ZipLocation.$": "$.BuildOutput.Build.Artifacts.Location",
-                    "TemplateFileName": "${GithubRepo}.template.yml",
-                    "TemplateConfigurationFileName": ".prod.config.json",
+                    "StackName": "icons-dns",
+                    "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[0].Location",
+                    "TemplateFileName": "dns.template.yml",
                     "RoleArn": "${SharedRoleArn}",
                     "Token.$": "$$.Task.Token",
                     "ParameterOverrides": {
