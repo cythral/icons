@@ -197,7 +197,8 @@ Resources:
                 "ResultPath": null,
                 "Parameters": {
                   "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[1].Location",
-                  "DestinationBucket": "icons.dev.cythral.com"
+                  "DestinationBucket": "icons.dev.cythral.com",
+                  "RoleArn": "${DevRoleArn}"
                 },
                 "Next": "Ask for Approval"
               },
@@ -258,7 +259,8 @@ Resources:
                 "ResultPath": null,
                 "Parameters": {
                   "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[1].Location",
-                  "DestinationBucket": "icons.cythral.com"
+                  "DestinationBucket": "icons.cythral.com",
+                  "RoleArn": "${ProdRoleArn}"
                 },
                 "Next": "Deploy DNS"
               },
