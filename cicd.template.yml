@@ -352,4 +352,4 @@ Resources:
           ProdGoogleClientId: !ImportValue sso-aws-registry:ProdGoogleClientId
           ProdIdentityPoolId: !ImportValue sso-aws-registry:ProdIdentityPoolId
           SharedGoogleClientId: !ImportValue sso-aws-registry:SharedGoogleClientId
-          SharedIdentityPoolId: !ImportValue sso-aws-registry:SharedIdentityPoolId
+          SharedIdentityPoolId: !ImportValue sso-aws-registry:SharedIdentityPoolId 
