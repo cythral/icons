@@ -3,6 +3,7 @@ Parameters:
   GithubToken: 
     Type: String 
     NoEcho: true
+    Default: ""
     Description: OAuth token for the Github organization.  Needs read/write access to repos and repo hooks
 
   GithubOwner:
@@ -15,6 +16,7 @@ Parameters:
 
   GithubBranch:
     Type: String
+    Default: ""
     Description: Name of the github branch to track
 
 Resources:
@@ -176,7 +178,7 @@ Resources:
                 "ResultPath": "$.DevOutputs",
                 "Parameters": {
                   "QueueUrl": "${DeploymentQueue}",
-                  "MessageGroupId": "${GithubRepo}",
+                  "MessageGroupId": "${GithubRepo}-dev",
                   "MessageBody": {
                     "StackName": "${GithubRepo}",
                     "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[0].Location",
@@ -184,9 +186,17 @@ Resources:
                     "TemplateConfigurationFileName": "${GithubRepo}.dev.config.json",
                     "RoleArn": "${DevRoleArn}",
                     "Token.$": "$$.Task.Token",
-                    "Capabilities": [
-                      "CAPABILITY_IAM"
-                    ]
+                    "Capabilities": ["CAPABILITY_IAM"],
+                    "EnvironmentName": "dev",
+                    "CommitInfo": {
+                      "GithubOwner": "${GithubOwner}",
+                      "GithubRepository": "${GithubRepo}",
+                      "GithubRef.$": "$.head_commit.id"
+                    },
+                    "SsoConfig": {
+                      "GoogleClientId": "${DevGoogleClientId}",
+                      "IdentityPoolId": "${DevIdentityPoolId}"
+                    }
                   }
                 },
                 "Next": "Upload Dev Files"
@@ -198,7 +208,17 @@ Resources:
                 "Parameters": {
                   "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[1].Location",
                   "DestinationBucket": "icons.dev.cythral.com",
-                  "RoleArn": "${DevRoleArn}"
+                  "RoleArn": "${DevRoleArn}",
+                  "EnvironmentName": "dev",
+                  "CommitInfo": {
+                    "GithubOwner": "${GithubOwner}",
+                    "GithubRepository": "${GithubRepo}",
+                    "GithubRef.$": "$.head_commit.id"
+                  },
+                  "SsoConfig": {
+                    "GoogleClientId": "${DevGoogleClientId}",
+                    "IdentityPoolId": "${DevIdentityPoolId}"
+                  }
                 },
                 "Next": "Ask for Approval"
               },
@@ -238,7 +258,7 @@ Resources:
                 "ResultPath": "$.ProdOutputs",
                 "Parameters": {
                   "QueueUrl": "${DeploymentQueue}",
-                  "MessageGroupId": "${GithubRepo}",
+                  "MessageGroupId": "${GithubRepo}-prod",
                   "MessageBody": {
                     "StackName": "${GithubRepo}",
                     "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[0].Location",
@@ -246,9 +266,17 @@ Resources:
                     "TemplateConfigurationFileName": "${GithubRepo}.prod.config.json",
                     "RoleArn": "${ProdRoleArn}",
                     "Token.$": "$$.Task.Token",
-                    "Capabilities": [
-                      "CAPABILITY_IAM"
-                    ]
+                    "Capabilities": ["CAPABILITY_IAM"],
+                    "EnvironmentName": "prod",
+                    "CommitInfo": {
+                      "GithubOwner": "${GithubOwner}",
+                      "GithubRepository": "${GithubRepo}",
+                      "GithubRef.$": "$.head_commit.id"
+                    },
+                    "SsoConfig": {
+                      "GoogleClientId": "${ProdGoogleClientId}",
+                      "IdentityPoolId": "${ProdIdentityPoolId}"
+                    }
                   }
                 },
                 "Next": "Upload Prod Files"
@@ -260,7 +288,17 @@ Resources:
                 "Parameters": {
                   "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[1].Location",
                   "DestinationBucket": "icons.cythral.com",
-                  "RoleArn": "${ProdRoleArn}"
+                  "RoleArn": "${ProdRoleArn}",
+                  "EnvironmentName": "prod",
+                  "CommitInfo": {
+                    "GithubOwner": "${GithubOwner}",
+                    "GithubRepository": "${GithubRepo}",
+                    "GithubRef.$": "$.head_commit.id"
+                  },
+                  "SsoConfig": {
+                    "GoogleClientId": "${ProdGoogleClientId}",
+                    "IdentityPoolId": "${ProdIdentityPoolId}"
+                  }
                 },
                 "Next": "Deploy DNS"
               },
@@ -270,7 +308,7 @@ Resources:
                 "ResultPath": null,
                 "Parameters": {
                   "QueueUrl": "${DeploymentQueue}",
-                  "MessageGroupId": "${GithubRepo}",
+                  "MessageGroupId": "${GithubRepo}-dns",
                   "MessageBody": {
                     "StackName": "icons-dns",
                     "ZipLocation.$": "$.BuildOutput.Build.SecondaryArtifacts[0].Location",
@@ -284,9 +322,17 @@ Resources:
                       "ProdDomainName.$": "$.ProdOutputs.DomainName",
                       "ProdAliasTarget.$": "$.ProdOutputs.CloudfrontDomainName"
                     },
-                    "Capabilities": [
-                      "CAPABILITY_IAM"
-                    ]
+                    "Capabilities": ["CAPABILITY_IAM"],
+                    "EnvironmentName": "shared",
+                    "CommitInfo": {
+                      "GithubOwner": "${GithubOwner}",
+                      "GithubRepository": "${GithubRepo}",
+                      "GithubRef.$": "$.head_commit.id"
+                    },
+                    "SsoConfig": {
+                      "GoogleClientId": "${SharedGoogleClientId}",
+                      "IdentityPoolId": "${SharedIdentityPoolId}"
+                    }
                   }
                 },
                 "Next": "Success"
@@ -300,4 +346,10 @@ Resources:
           ProdRoleArn: !ImportValue cfn-metadata:ProdAgentRoleArn
           SharedRoleArn: !ImportValue cfn-utilities:MasterRoleArn
           ApprovalNotificationFunction: cfn-core-ApprovalNotificationFunction-14V53I9N6Z2YZ
-          S3DeploymentFunctionArn: !ImportValue cfn-core:S3DeploymentFunctionArn  
+          S3DeploymentFunctionArn: !ImportValue cfn-core:S3DeploymentFunctionArn
+          DevGoogleClientId: !ImportValue sso-aws-registry:DevGoogleClientId
+          DevIdentityPoolId: !ImportValue sso-aws-registry:DevIdentityPoolId
+          ProdGoogleClientId: !ImportValue sso-aws-registry:ProdGoogleClientId
+          ProdIdentityPoolId: !ImportValue sso-aws-registry:ProdIdentityPoolId
+          SharedGoogleClientId: !ImportValue sso-aws-registry:SharedGoogleClientId
+          SharedIdentityPoolId: !ImportValue sso-aws-registry:SharedIdentityPoolId
