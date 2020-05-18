@@ -210,6 +210,7 @@ Resources:
                   "DestinationBucket": "icons.dev.cythral.com",
                   "RoleArn": "${DevRoleArn}",
                   "EnvironmentName": "dev",
+                  "ProjectName": "${GithubRepo}",
                   "CommitInfo": {
                     "GithubOwner": "${GithubOwner}",
                     "GithubRepository": "${GithubRepo}",
@@ -290,6 +291,7 @@ Resources:
                   "DestinationBucket": "icons.cythral.com",
                   "RoleArn": "${ProdRoleArn}",
                   "EnvironmentName": "prod",
+                  "ProjectName": "${GithubRepo}",
                   "CommitInfo": {
                     "GithubOwner": "${GithubOwner}",
                     "GithubRepository": "${GithubRepo}",
