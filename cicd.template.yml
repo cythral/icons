@@ -192,10 +192,6 @@ Resources:
                       "GithubOwner": "${GithubOwner}",
                       "GithubRepository": "${GithubRepo}",
                       "GithubRef.$": "$.head_commit.id"
-                    },
-                    "SsoConfig": {
-                      "GoogleClientId": "${DevGoogleClientId}",
-                      "IdentityPoolId": "${DevIdentityPoolId}"
                     }
                   }
                 },
@@ -215,10 +211,6 @@ Resources:
                     "GithubOwner": "${GithubOwner}",
                     "GithubRepository": "${GithubRepo}",
                     "GithubRef.$": "$.head_commit.id"
-                  },
-                  "SsoConfig": {
-                    "GoogleClientId": "${DevGoogleClientId}",
-                    "IdentityPoolId": "${DevIdentityPoolId}"
                   }
                 },
                 "Next": "Ask for Approval"
@@ -273,10 +265,6 @@ Resources:
                       "GithubOwner": "${GithubOwner}",
                       "GithubRepository": "${GithubRepo}",
                       "GithubRef.$": "$.head_commit.id"
-                    },
-                    "SsoConfig": {
-                      "GoogleClientId": "${ProdGoogleClientId}",
-                      "IdentityPoolId": "${ProdIdentityPoolId}"
                     }
                   }
                 },
@@ -296,10 +284,6 @@ Resources:
                     "GithubOwner": "${GithubOwner}",
                     "GithubRepository": "${GithubRepo}",
                     "GithubRef.$": "$.head_commit.id"
-                  },
-                  "SsoConfig": {
-                    "GoogleClientId": "${ProdGoogleClientId}",
-                    "IdentityPoolId": "${ProdIdentityPoolId}"
                   }
                 },
                 "Next": "Deploy DNS"
@@ -330,10 +314,6 @@ Resources:
                       "GithubOwner": "${GithubOwner}",
                       "GithubRepository": "${GithubRepo}",
                       "GithubRef.$": "$.head_commit.id"
-                    },
-                    "SsoConfig": {
-                      "GoogleClientId": "${SharedGoogleClientId}",
-                      "IdentityPoolId": "${SharedIdentityPoolId}"
                     }
                   }
                 },
@@ -344,14 +324,11 @@ Resources:
               }
             }
           }
-        - DevRoleArn: !ImportValue cfn-metadata:DevAgentRoleArn
+        - # Roles
+          DevRoleArn: !ImportValue cfn-metadata:DevAgentRoleArn
           ProdRoleArn: !ImportValue cfn-metadata:ProdAgentRoleArn
           SharedRoleArn: !ImportValue cfn-utilities:MasterRoleArn
+
+          # Functions
           ApprovalNotificationFunction: cfn-core-ApprovalNotificationFunction-14V53I9N6Z2YZ
           S3DeploymentFunctionArn: !ImportValue cfn-core:S3DeploymentFunctionArn
-          DevGoogleClientId: !ImportValue sso-aws-registry:DevGoogleClientId
-          DevIdentityPoolId: !ImportValue sso-aws-registry:DevIdentityPoolId
-          ProdGoogleClientId: !ImportValue sso-aws-registry:ProdGoogleClientId
-          ProdIdentityPoolId: !ImportValue sso-aws-registry:ProdIdentityPoolId
-          SharedGoogleClientId: !ImportValue sso-aws-registry:SharedGoogleClientId
-          SharedIdentityPoolId: !ImportValue sso-aws-registry:SharedIdentityPoolId  
