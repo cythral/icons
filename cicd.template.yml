@@ -331,4 +331,4 @@ Resources:
 
           # Functions
           ApprovalNotificationFunction: cfn-core-ApprovalNotificationFunction-14V53I9N6Z2YZ
-          S3DeploymentFunctionArn: !ImportValue cfn-core:S3DeploymentFunctionArn    
+          S3DeploymentFunctionArn: !ImportValue cfn-core:S3DeploymentFunctionArn     
