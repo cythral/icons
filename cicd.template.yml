@@ -23,6 +23,9 @@ Resources:
   ArtifactStore:
     Type: AWS::S3::Bucket
 
+  TestBucket:
+    Type: AWS::S3::Bucket
+
   ArtifactStorePolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
