@@ -28,9 +28,6 @@ Resources:
             AllowedOrigins:
               - "*"
   
-  TestBucket:
-    Type: AWS::S3::Bucket
-  
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
