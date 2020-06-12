@@ -38,12 +38,17 @@ Resources:
           - Effect: Allow
             Principal:
               CanonicalUser: !GetAtt CloudfrontIdentity.S3CanonicalUserId
-            Action: 
-              - s3:ListBucket
-              - s3:GetObject
-            Resource: 
-              - !Sub arn:aws:s3:::${Bucket}
-              - !Sub arn:aws:s3:::${Bucket}/*
+            Action: s3:ListBucket
+            Resource: !Sub arn:aws:s3:::${Bucket}
+          - Effect: Allow
+            Principal:
+              CanonicalUser: !GetAtt CloudfrontIdentity.S3CanonicalUserId
+            Action: s3:GetObject
+            Resource: !Sub arn:aws:s3:::${Bucket}/*
+            Condition:
+              StringNotEquals:
+                s3:ExistingObjectTag/dirty: "true"
+            
 
   CloudfrontIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
