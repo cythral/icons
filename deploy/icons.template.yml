@@ -13,6 +13,13 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref DomainName
+      LifecycleConfiguration:
+        Rules:
+          - Status: Enabled
+            ExpirationInDays: 1
+            TagFilters:
+              - Key: dirty
+                Value: "true"
       CorsConfiguration:
         CorsRules:
           - AllowedMethods:
