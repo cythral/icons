@@ -52,7 +52,7 @@ Resources:
 
   CloudfrontIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-    Properties:
+    Properties: 
       CloudFrontOriginAccessIdentityConfig:
         Comment: Origin access identity for Cythral Icons
 
