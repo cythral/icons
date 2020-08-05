@@ -67,6 +67,7 @@ Resources:
         Enabled: true
         PriceClass: PriceClass_100
         DefaultRootObject: index.html
+        HttpVersion: http2
         ViewerCertificate: 
           AcmCertificateArn: !Ref SSLCertificate
           SslSupportMethod: sni-only
