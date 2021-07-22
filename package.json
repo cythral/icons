@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/cythral/icons#readme",
   "devDependencies": {
-    "@vusion/webfonts-generator": "^0.6.0",
+    "@vusion/webfonts-generator": "0.7.3",
     "axios": "^0.18.1",
     "dom-parser": "^0.1.6",
     "gulp": "^4.0.2",
