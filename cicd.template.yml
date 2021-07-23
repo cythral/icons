@@ -213,7 +213,7 @@ Resources:
                   "CommitInfo": {
                     "GithubOwner": "${GithubOwner}",
                     "GithubRepository": "${GithubRepo}",
-                    "GithubRef.$": "$.head_commit.id"
+                    "GithubRef.$": "$.head_commit_id"
                   }
                 },
                 "Next": "Ask for Approval"
