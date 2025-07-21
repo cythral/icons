@@ -25,7 +25,7 @@
     "@vusion/webfonts-generator": "0.8.0",
     "axios": "0.24.0",
     "dom-parser": "0.1.6",
-    "gulp": "4.0.2",
+    "gulp": "5.0.1",
     "less": "4.1.2",
     "less-plugin-clean-css": "1.5.1"
   }
